@@ -104,7 +104,7 @@ public class Test {
       //Test.testAlias();
       //Test.testKvp();
       //Test.testDump();
-      Test.testLoad();
+      //Test.testLoad();
     } catch (Throwable t) {
       LOGGER.error(t.getClass().getName());
       LOGGER.error("Exception",t);

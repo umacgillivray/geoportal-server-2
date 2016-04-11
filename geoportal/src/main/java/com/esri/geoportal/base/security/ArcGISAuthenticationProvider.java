@@ -302,7 +302,7 @@ public class ArcGISAuthenticationProvider implements AuthenticationProvider {
    */
   public String getRestUrl() {
     String authorizeUrl = this.getAuthorizeUrl();
-    if (authorizeUrl.indexOf("/sharing/outh2/") > 0) {
+    if (authorizeUrl.indexOf("/sharing/oauth2/") > 0) {
       return authorizeUrl.substring(0,authorizeUrl.indexOf("/sharing/oauth2/"))+"/sharing/rest";
     }
     return authorizeUrl.substring(0,authorizeUrl.indexOf("/sharing/rest/oauth2/"))+"/sharing/rest";
