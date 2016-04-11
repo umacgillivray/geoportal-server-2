@@ -181,6 +181,7 @@ function(declare, lang, array, djQuery, on, domConstruct, template, i18n, Search
             self.search();
           }
         },spn);
+        // "class": "radio-inline",
         var label = domConstruct.create("label",{
           "for": id,
           innerHTML: lbl,

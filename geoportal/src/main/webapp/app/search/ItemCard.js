@@ -39,6 +39,7 @@ function(declare, lang, array, topic, appTopics, domClass, domConstruct,
     
     isItemCard: true,
     item: null,
+    itemsNode: null,
     searchPane: null,
     
     postCreate: function() {
@@ -71,6 +72,22 @@ function(declare, lang, array, topic, appTopics, domClass, domConstruct,
         return (username === item.sys_owner_s);
       }
       return false;
+    },
+    
+    _mitigateDropdownClip: function(dd,ddul) {
+      // Bootstrap dropdown menus clipped by scrollable container
+      var reposition = function() {
+        var t = $(dd).offset().top + 15 - $(window).scrollTop();
+        var l = $(dd).offset().left;
+        $(ddul).css('top',t);
+        $(ddul).css('left',l);
+      };
+      $(ddul).css("position","fixed");
+      $(dd).on('click', function() {reposition();});
+      $(window).scroll(function() {reposition();});
+      $(this.itemsNode).scroll(function() {reposition();});
+      $(window).resize(function() {reposition();});
+      //$(window).resize(function() {$(dd).removeClass('open');});
     },
     
     _renderAddToMap: function(item,links) {
@@ -182,6 +199,7 @@ function(declare, lang, array, topic, appTopics, domClass, domConstruct,
           innerHTML: u
         },ddli);
       });
+      this._mitigateDropdownClip(dd,ddul);
     },
     
     _renderOptionsDropdown: function(itemId,item) {
@@ -259,6 +277,7 @@ function(declare, lang, array, topic, appTopics, domClass, domConstruct,
         var ddli = domConstruct.create("li",{},ddul);
         ddli.appendChild(link);
       });
+      this._mitigateDropdownClip(dd,ddul);
     },
     
     _renderOwnerAndDate: function(item) {

@@ -44,7 +44,6 @@ function(declare, lang, array, aspect, domConstruct, template, i18n, SearchCompo
       this.own(aspect.after(this.paging,"search",lang.hitch(this,function(){
         this.search();
       })));
-      //$(window).scroll(this.checkDropdowns);
     },
     
     addSort: function() {
@@ -106,60 +105,6 @@ function(declare, lang, array, aspect, domConstruct, template, i18n, SearchCompo
       addOption(ddul,ddbtn,i18n.search.sort.byDate,"sys_modified_dt","desc");
     },
     
-    checkDropdowns: function() {
-      $("#"+this.id+" .dropdown").on("show.bs.dropdown",function(e) {
-        console.warn("dropdown",e);
-        var menu = $('.dropdown-menu',this);
-        console.warn("menu",menu);
-        /*
-        $(menu).css({
-          display: "block",
-          position: "absolute",
-          left: e.pageX,
-          top: e.pageY
-       });
-       */
-        
-        //display: "block",left: e.pageX,top: e.pageY
-      });
-    },
-    
-    checkDropdowns2: function() {
-      
-      console.warn("checkDropdowns........................");
-      
-      var itemsNode = this.itemsNode;
-      
-      
-      //var max = $(itemsNode).offset().top + $(itemsNode).innerHeight();
-      
-      var max = $(itemsNode).innerHeight() + $(itemsNode).scrollTop();
-      
-      $("#"+this.id+" .dropdown-menu").each( function(){
-
-        // Invisibly expand the dropdown menu so its true height can be calculated
-        $(this).css({
-          visibility: "hidden",
-          display: "block"
-        });
-
-        // Necessary to remove class each time so we don't unwantedly use dropup's offset top
-        $(this).parent().removeClass("dropup");
-        
-        var x = $(this).offset().top + $(this).outerHeight();
-        console.warn($(this).offset().top+" "+x+" "+max);
-
-        // Determine whether bottom of menu will be below window at current scroll position
-        if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){
-          //$(this).parent().addClass("dropup");
-        }
-        //$(this).parent().addClass("dropup");
-
-        // Return dropdown menu to fully hidden state
-        $(this).removeAttr("style");
-      });    
-    },
-    
     destroyItems: function(searchContext,searchResponse) {
       this.noMatchNode.style.display = "none";
       this.noMatchNode.innerHTML = "";
@@ -197,12 +142,14 @@ function(declare, lang, array, aspect, domConstruct, template, i18n, SearchCompo
         var num = hits.length;
         var itemsNode = this.itemsNode;
         array.forEach(hits,function(hit){
-          var itemCard = new ItemCard({searchPane:this.searchPane});
+          var itemCard = new ItemCard({
+            itemsNode: this.itemsNode,
+            searchPane: this.searchPane
+          });
           itemCard.render(hit);
           itemCard.placeAt(itemsNode);
         },this);
       }
-      //this.checkDropdowns();
     },
     
   });
