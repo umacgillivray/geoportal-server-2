@@ -26,10 +26,12 @@ define(["dojo/_base/declare",
         "dojo/text!./templates/SearchPane.html",
         "dojo/i18n!app/nls/resources",
         "esri/request",
+        "app/context/AppClient",
         "app/search/SearchBox",
         "app/search/ResultsPane"], 
 function(declare, lang, array, query, domClass, topic, appTopics, registry,
-         _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n, esriRequest) {
+         _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n, 
+         esriRequest, AppClient) {
 
   var oThisClass = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
