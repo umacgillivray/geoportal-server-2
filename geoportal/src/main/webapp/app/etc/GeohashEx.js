@@ -49,18 +49,22 @@ function(declare, lang, Extent, Point) {
           if (bitsTotal % 2 === 0) {
             mid = (maxLon + minLon) / 2;
             if (longitude > mid) {
+              /* jslint bitwise: true */
               hash_value = (hash_value << 1) + 1;
               minLon = mid;
             } else {
+              /* jslint bitwise: true */
               hash_value = (hash_value << 1) + 0;
               maxLon = mid;
             }
           } else {
             mid = (maxLat + minLat) / 2;
             if (latitude > mid) {
+              /* jslint bitwise: true */
               hash_value = (hash_value << 1) + 1;
               minLat = mid;
             } else {
+              /* jslint bitwise: true */
               hash_value = (hash_value << 1) + 0;
               maxLat = mid;
             }
@@ -120,7 +124,8 @@ function(declare, lang, Extent, Point) {
           var code = hash_string[i].toLowerCase();
           hashValue = this.BASE32_CODES_DICT[code];
           for (var bits = 4; bits >= 0; bits--) {
-            var bit = (hashValue >> bits) & 1;
+            /* jslint bitwise: true */
+            var bit = (hashValue >> bits) & 1; 
             if (isLon) {
               mid = (maxLon + minLon) / 2;
               if (bit === 1) {
@@ -169,6 +174,7 @@ function(declare, lang, Extent, Point) {
         return [minLat, minLon, maxLat, maxLon];
       },
       get_bit: function(bits, position) {
+        /* jslint bitwise: true */
         return (bits / Math.pow(2, position)) & 0x01;
       },
       decode: function(hashString) {
@@ -222,6 +228,7 @@ function(declare, lang, Extent, Point) {
           neighbor_lon, bitDepth);
       },
       neighbors: function(hash_string) {
+        var self = this;
         var hashstringLength = hash_string.length;
         var lonlat = this.decode(hash_string);
         var lat = lonlat.latitude;
@@ -247,12 +254,13 @@ function(declare, lang, Extent, Point) {
           latErr;
           neighbor_lon = lon + neighborLonDir *
           lonErr;
-          return encode(neighbor_lat,
+          return self.encode(neighbor_lat,
             neighbor_lon, hashstringLength);
         }
         return neighborHashList;
       },
       neighbors_int: function(hash_int, bitDepth) {
+        var self = this;
         bitDepth = bitDepth || 52;
         var lonlat = this.decode_int(hash_int, bitDepth);
         var lat = lonlat.latitude;
@@ -278,7 +286,7 @@ function(declare, lang, Extent, Point) {
           latErr;
           neighbor_lon = lon + neighborLonDir *
           lonErr;
-          return encode_int(neighbor_lat,
+          return self.encode_int(neighbor_lat,
             neighbor_lon, bitDepth);
         }
         return neighborHashIntList;
@@ -311,8 +319,8 @@ function(declare, lang, Extent, Point) {
       
       bboxes_int: function(minLat, minLon, maxLat, maxLon, bitDepth) {
         bitDepth = bitDepth || 52;
-        var hashSouthWest = encode_int(minLat, minLon,bitDepth);
-        var hashNorthEast = encode_int(maxLat,maxLon,bitDepth);
+        var hashSouthWest = this.encode_int(minLat, minLon,bitDepth);
+        var hashNorthEast = this.encode_int(maxLat,maxLon,bitDepth);
         var latlon = this.decode_int(hashSouthWest,bitDepth);
         var perLat = latlon.error.latitude * 2;
         var perLon = latlon.error.longitude * 2;

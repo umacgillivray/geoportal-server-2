@@ -75,7 +75,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-
+@SuppressWarnings("unused")
 public class Test {
   
   public static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
@@ -342,16 +342,14 @@ public class Test {
       n++; count++;
       if (n > 20) {
         System.err.println("count="+count+" ...");
-        Process p = Runtime.getRuntime().exec(cmd+sb.toString()+out);
-        //p.waitFor();
+        Runtime.getRuntime().exec(cmd+sb.toString()+out);
         n = 0; sb = new StringBuilder();
         //break;
       }
     }
     if (sb.length() > 0) {
       System.err.println("count="+count+" ...");
-      Process p = Runtime.getRuntime().exec(cmd+sb.toString()+out);
-      //p.waitFor();
+      Runtime.getRuntime().exec(cmd+sb.toString()+out);
     }
     
     //String out = " > C:/logs/python.txt";
