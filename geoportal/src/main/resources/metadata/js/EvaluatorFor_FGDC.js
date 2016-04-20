@@ -52,7 +52,7 @@ G.evaluators.fgdc = {
       var result = G.makeEnvelope(xmin,ymin,xmax,ymax);
       if (result && result.envelope) {
         G.writeMultiProp(task.item,"envelope_geo",result.envelope);
-        G.writeMultiProp(task.item,"apiso_BoundingBox_geo",result.envelope);
+        //G.writeMultiProp(task.item,"apiso_BoundingBox_geo",result.envelope);
         if (result.center) {
           G.writeMultiProp(task.item,"envelope_cen_pt",result.center);
         }

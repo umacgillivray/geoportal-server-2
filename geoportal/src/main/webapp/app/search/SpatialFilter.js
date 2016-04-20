@@ -111,10 +111,11 @@ function(declare, lang, array, djQuery, on, domConstruct, template, i18n, Search
       var v2 = min+iv;
       var v3 = min+(2*iv);
       var v4 = max;
-      renderer.addBreak(v0,v1,newsym(2));
-      renderer.addBreak(v1,v2,newsym(5));
-      renderer.addBreak(v2,v3,newsym(8));
-      renderer.addBreak(v3,v4,newsym(10));
+      // 2,5,8,12 - 4,8,12,16
+      renderer.addBreak(v0,v1,newsym(4));
+      renderer.addBreak(v1,v2,newsym(8));
+      renderer.addBreak(v2,v3,newsym(12));
+      renderer.addBreak(v3,v4,newsym(16));
       return renderer;
     },
     

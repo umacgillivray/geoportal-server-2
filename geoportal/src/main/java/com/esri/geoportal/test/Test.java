@@ -769,6 +769,7 @@ public class Test {
     String base64Creds = new String(Base64.getEncoder().encode(creds.getBytes())); 
     String dir = "C:/Projects/elastic/metadata/sampedata/";
     String url = "http://localhost:8080/geoportal2/rest/metadata/item";
+    //url = "http://gptdbsrv08r2:8080/geoportal/rest/metadata/item";
     int count = 0;
     try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(dir))) {
       for (Path path: directoryStream) {

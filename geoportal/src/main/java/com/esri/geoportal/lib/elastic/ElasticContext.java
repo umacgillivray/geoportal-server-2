@@ -44,6 +44,7 @@ public class ElasticContext {
   /** Instance variables . */
   private boolean allowFileId;
   private boolean autoCreateIndex;
+  private String clusterName = null;
   private String indexName = "metadata";
   private boolean indexNameIsAlias = true;
   private String itemIndexType = "item";
@@ -73,6 +74,15 @@ public class ElasticContext {
     this.autoCreateIndex = autoCreateIndex;
   }
   
+  /** The cluster name. */
+  public String getClusterName() {
+    return clusterName;
+  }
+  /** The cluster name. */
+  public void setClusterName(String clusterName) {
+    this.clusterName = clusterName;
+  }
+
   /** The index mappings file (default=config/elastic-mappings.json). */
   public String getMappingsFile() {
     return mappingsFile;
@@ -242,7 +252,12 @@ public class ElasticContext {
     } else if (transportClient != null) {
       LOGGER.warn("Configuration warning: TransportClient has already been started.");
     } else {
-      transportClient = TransportClient.builder().build();
+      if (clusterName != null && clusterName.length() > 0) {
+        Settings settings = Settings.settingsBuilder().put("cluster.name",clusterName).build();
+        transportClient = TransportClient.builder().settings(settings).build();
+      } else {
+        transportClient = TransportClient.builder().build();
+      }
       for (String node: nodes) {
         InetAddress a = InetAddress.getByName(node);
         transportClient.addTransportAddress(new InetSocketTransportAddress(a,9300));
